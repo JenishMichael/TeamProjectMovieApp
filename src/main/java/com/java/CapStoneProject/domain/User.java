@@ -1,23 +1,32 @@
 package com.java.CapStoneProject.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.util.List;
 
+@Entity
 public class User {
+    @Column(unique = true)
     private String username;
     private String password;
+    @Id
     private String email;
     private String profileImageUrl;
-    private List<Movie> favoriteMovies;
+    @ElementCollection
+    private List<String> favoriteMoviesIds;
 
     public User() {
     }
 
-    public User(String username, String password, String email, String profileImageUrl, List<Movie> favoriteMovies) {
+    public User(String username, String password, String email, String profileImageUrl, List<String> favoriteMoviesIds) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.profileImageUrl = profileImageUrl;
-        this.favoriteMovies = favoriteMovies;
+        this.favoriteMoviesIds = favoriteMoviesIds;
     }
 
     public String getUsername() {
@@ -52,12 +61,12 @@ public class User {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public List<Movie> getFavoriteMovies() {
-        return favoriteMovies;
+    public List<String> getFavoriteMoviesIds() {
+        return favoriteMoviesIds;
     }
 
-    public void setFavoriteMovies(List<Movie> favoriteMovies) {
-        this.favoriteMovies = favoriteMovies;
+    public void setFavoriteMoviesIds(List<String> favoriteMoviesIds) {
+        this.favoriteMoviesIds = favoriteMoviesIds;
     }
 
     @Override
@@ -67,7 +76,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", profileImageUrl='" + profileImageUrl + '\'' +
-                ", favoriteMovies=" + favoriteMovies +
+                ", favoriteMoviesIds=" + favoriteMoviesIds +
                 '}';
     }
 }

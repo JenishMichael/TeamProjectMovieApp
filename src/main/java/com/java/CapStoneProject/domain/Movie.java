@@ -1,7 +1,13 @@
 package com.java.CapStoneProject.domain;
 
+import jakarta.persistence.Id;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Movie {
 
+    @Id
     private String movieId;
     private String title;
     private String posterUrl;
