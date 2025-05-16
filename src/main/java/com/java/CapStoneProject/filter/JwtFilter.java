@@ -1,0 +1,36 @@
+package com.java.CapStoneProject.filter;
+
+import io.jsonwebtoken.Jwts;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.filter.GenericFilterBean;
+
+import java.io.IOException;
+
+public class JwtFilter extends GenericFilterBean {
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+        ServletOutputStream pw = httpServletResponse.getOutputStream();
+        // expects the token to come from header
+        String authHeader = httpServletRequest.getHeader("Authorization");
+        if (authHeader == null || !authHeader.startsWith("Bearer")) {
+            //If token is not coming than set the response status as UNAUTHORIZED
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            pw.println("Missing or invalid Token ");
+            pw.close();
+        } else {//extract token from the header
+            String jwtToken = authHeader.substring(7);//Bearer => 6+1 since token begins with Bearer
+            //token validation
+            String username = Jwts.parser().setSigningKey("secretkey").parseClaimsJws(jwtToken).getBody().getSubject();
+            httpServletRequest.setAttribute("username", username);
+            // pass the claims in the request
+            filterChain.doFilter(servletRequest, servletResponse); //some more filters , controller}
+
+        }
+    }
+
+}
+
