@@ -1,15 +1,10 @@
 package com.java.CapStoneProject.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
 import java.util.List;
 
-@Entity
 public class User {
     private String username;
     private String password;
-    @Id
     private String email;
     private String profileImageUrl;
     private List<Movie> favoriteMovies;
