@@ -10,59 +10,66 @@ import java.util.List;
 @Entity
 public class User {
 
+    @Column(unique = true)
     private String username;
     private String password;
     @Id
-    @Column(unique = true)
     private String email;
-//    private String profileImageUrl;
+    private String profileImageUrl;
     @ElementCollection
-
     private List<String> favoriteMoviesIds;
+
     public User() {
     }
 
-    public User(String username, String password, String email, List<String> favoriteMoviesIds) {
+    public User(String username, String password, String email, String profileImageUrl, List<String> favoriteMoviesIds) {
         this.username = username;
         this.password = password;
         this.email = email;
-//        this.profileImageUrl = profileImageUrl;
+        this.profileImageUrl = profileImageUrl;
         this.favoriteMoviesIds = favoriteMoviesIds;
     }
 
     public String getUsername() {
+
         return username;
     }
 
     public void setUsername(String username) {
+
         this.username = username;
     }
 
     public String getPassword() {
+
         return password;
     }
 
     public void setPassword(String password) {
+
         this.password = password;
     }
 
     public String getEmail() {
+
         return email;
     }
 
     public void setEmail(String email) {
+
         this.email = email;
     }
 
-//    public String getProfileImageUrl() {
-//        return profileImageUrl;
-//    }
-//
-//    public void setProfileImageUrl(String profileImageUrl) {
-//        this.profileImageUrl = profileImageUrl;
-//    }
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 
     public List<String> getFavoriteMoviesIds() {
+
         return favoriteMoviesIds;
     }
 
@@ -76,7 +83,7 @@ public class User {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-//                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
                 ", favoriteMoviesIds=" + favoriteMoviesIds +
                 '}';
     }
