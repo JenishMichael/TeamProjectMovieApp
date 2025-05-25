@@ -1,9 +1,12 @@
 package com.java.CapStoneProject.service;
 
 import com.java.CapStoneProject.domain.User;
+import com.java.CapStoneProject.exception.UserDoesnotExistsException;
 import com.java.CapStoneProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements IUserService
 {
     private UserRepository userRepository;
@@ -19,9 +22,9 @@ public class UserServiceImpl implements IUserService
     }
 
     @Override
-    public User findByUserNameAndUserPassword(String username, String password)
+    public User findUserByEmailAndPassword(String email, String password) throws UserDoesnotExistsException
     {
-        User user=userRepository. findByUserNameAndUserPassword(username,password);
+        User user=userRepository. findByEmailAndPassword(email,password);
         return user;
     }
 }

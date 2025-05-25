@@ -1,23 +1,33 @@
 package com.java.CapStoneProject.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
 import java.util.List;
 
+@Entity
 public class User {
+
     private String username;
     private String password;
+    @Id
+    @Column(unique = true)
     private String email;
-    private String profileImageUrl;
-    private List<Movie> favoriteMovies;
+//    private String profileImageUrl;
+    @ElementCollection
 
+    private List<String> favoriteMoviesIds;
     public User() {
     }
 
-    public User(String username, String password, String email, String profileImageUrl, List<Movie> favoriteMovies) {
+    public User(String username, String password, String email, List<String> favoriteMoviesIds) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.profileImageUrl = profileImageUrl;
-        this.favoriteMovies = favoriteMovies;
+//        this.profileImageUrl = profileImageUrl;
+        this.favoriteMoviesIds = favoriteMoviesIds;
     }
 
     public String getUsername() {
@@ -44,20 +54,20 @@ public class User {
         this.email = email;
     }
 
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+//    public String getProfileImageUrl() {
+//        return profileImageUrl;
+//    }
+//
+//    public void setProfileImageUrl(String profileImageUrl) {
+//        this.profileImageUrl = profileImageUrl;
+//    }
+
+    public List<String> getFavoriteMoviesIds() {
+        return favoriteMoviesIds;
     }
 
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
-    }
-
-    public List<Movie> getFavoriteMovies() {
-        return favoriteMovies;
-    }
-
-    public void setFavoriteMovies(List<Movie> favoriteMovies) {
-        this.favoriteMovies = favoriteMovies;
+    public void setFavoriteMoviesIds(List<String> favoriteMoviesIds) {
+        this.favoriteMoviesIds = favoriteMoviesIds;
     }
 
     @Override
@@ -66,8 +76,8 @@ public class User {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", profileImageUrl='" + profileImageUrl + '\'' +
-                ", favoriteMovies=" + favoriteMovies +
+//                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", favoriteMoviesIds=" + favoriteMoviesIds +
                 '}';
     }
 }
