@@ -22,9 +22,9 @@ public class FavouritesServiceImpl implements FavouritesService {
     private MovieRepository movieRepository;
 
     @Override
-    public void addMoviesToFavouriteMovies(Movie movie, String userName) {
+    public void addMoviesToFavouriteMovies(Movie movie, String email) {
         //1. Check if User Already Exist
-        Optional<User> optionalUser = userRepository.findById(userName);
+        Optional<User> optionalUser = userRepository.findById(email);
         if(optionalUser.isEmpty()){
             throw new RuntimeException("User Not Found in addMoviesToFavouriteMovies");
         }
@@ -39,7 +39,7 @@ public class FavouritesServiceImpl implements FavouritesService {
         //3. Check if the current movieId is present in the favouriteIds list
         //4. If not add movieId else throw error
         if(favouriteMoviesIdsOfUser.contains(movie.getMovieId())){
-           throw new RuntimeException("Movie Id Already Present in addMoviesToFavouriteMovies");
+            throw new RuntimeException("Movie Id Already Present in addMoviesToFavouriteMovies");
 
         }
         favouriteMoviesIdsOfUser.add(movie.getMovieId());
@@ -51,7 +51,7 @@ public class FavouritesServiceImpl implements FavouritesService {
         userRepository.save(currentUser);
 
         //6. Check if the movie obj is present in MongoDB, if not present add Movie Obj
-        Optional<Movie> optionalMovie = movieRepository.findById(movie.getMovieId());
+        Optional<Movie> optionalMovie = movieRepository.findByMovieId(movie.getMovieId());
         if(optionalMovie.isEmpty()){
             movieRepository.save(movie);
         }
@@ -59,9 +59,9 @@ public class FavouritesServiceImpl implements FavouritesService {
     }
 
     @Override
-    public List<Movie> getFavouriteMoviesOfUser(String userName) {
+    public List<Movie> getFavouriteMoviesOfUser(String email) {
         //1. Check if User Already Exist
-        Optional<User> optionalUser = userRepository.findById(userName);
+        Optional<User> optionalUser = userRepository.findById(email);
         if(optionalUser.isEmpty()){
             throw new RuntimeException("User Not Found in getFavouriteMoviesOfUser");
         }
@@ -75,16 +75,16 @@ public class FavouritesServiceImpl implements FavouritesService {
         List<Movie> movieList = new ArrayList<>();
         if(favouriteMoviesIdsOfUser != null){
             for (String movieId : favouriteMoviesIdsOfUser) {
-                movieRepository.findById(movieId).ifPresent(movieList::add);
+                movieRepository.findByMovieId(movieId).ifPresent(movieList::add);
             }
         }
-    return movieList;
+        return movieList;
     }
 
     @Override
-    public void removeMoviesFromFavouriteMovie(String userName, String movieId) {
+    public void removeMoviesFromFavouriteMovie(String email, String movieId) {
         //1. Check if User Already Exist
-        Optional<User> optionalUser = userRepository.findById(userName);
+        Optional<User> optionalUser = userRepository.findById(email);
         if(optionalUser.isEmpty()){
             throw new RuntimeException("User Not Found in addMoviesToFavouriteMovies");
         }
